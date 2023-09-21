@@ -33,3 +33,10 @@ export const setupNewGame = () => {
         payload : initGameState
     }
 }
+
+export const opponentMove = (newPosition, temp) => {
+    return {
+        type: actionTypes.OPP_MOVE,
+        payload: { newPosition, temp}
+    }
+}

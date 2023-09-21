@@ -1,0 +1,37 @@
+.button {
+    font-weight: bold;
+        text-decoration-line: none;
+        color: #11004d;
+        font-family: "McLaren", cursive;
+        background-color: white;
+        
+        transition-duration: 0.4s;
+      
+        text-align: center;
+        /* display: inline-block; */
+        font-size: 16px;
+        cursor: pointer;
+    
+        :hover {
+            color: white;
+            background-color: #11004d;
+        }
+}
+
+.wallet {
+    font-weight: bold;
+        text-decoration-line: none;
+        color: #11004d;
+        font-family: "McLaren", cursive;
+        background-color: white;
+        padding: 10px 20px;
+        text-align: center;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+    
+        :hover {
+            color: white;
+            background-color: #11004d;
+        }
+}

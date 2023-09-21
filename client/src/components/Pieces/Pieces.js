@@ -1,14 +1,21 @@
 import './Pieces.css'
 import Piece from './Piece'
-import { useRef  } from 'react'
+import io from "socket.io-client"
+import { useEffect, useRef  } from 'react'
 import { useAppContext }from '../../contexts/Context'
 import { openPromotion } from '../../reducer/actions/popup'
 import { getCastlingDirections } from '../../arbiter/getMoves'
-import { updateCastling, detectStalemate, detectInsufficientMaterial, detectCheckmate} from '../../reducer/actions/game'
+import { updateCastling, detectStalemate, detectInsufficientMaterial, detectCheckmate, opponentMove} from '../../reducer/actions/game'
 
 import { makeNewMove, clearCandidates } from '../../reducer/actions/move'
 import arbiter from '../../arbiter/arbiter'
 import { getNewMoveNotation } from '../../helper'
+
+const socket = io.connect("http://localhost:3001");
+
+socket.on("connect", () => {
+    console.log(socket.id)
+})
 
 const Pieces = () => {
 
@@ -67,6 +74,9 @@ const Pieces = () => {
                 piece,rank,file,
                 x,y
             })
+
+            
+            // console.log("newposition: ", newPosition);
             const newMove = getNewMoveNotation({
                 piece,
                 rank,
@@ -76,15 +86,17 @@ const Pieces = () => {
                 position:currentPosition,
             })
             dispatch(makeNewMove({newPosition,newMove}))
-
+            
             if (arbiter.insufficientMaterial(newPosition))
-                dispatch(detectInsufficientMaterial())
-            else if (arbiter.isStalemate(newPosition,opponent,castleDirection)){
-                dispatch(detectStalemate())
-            }
-            else if (arbiter.isCheckMate(newPosition,opponent,castleDirection)){
-                dispatch(detectCheckmate(piece[0]))
-            }
+            dispatch(detectInsufficientMaterial())
+        else if (arbiter.isStalemate(newPosition,opponent,castleDirection)){
+            dispatch(detectStalemate())
+        }
+        else if (arbiter.isCheckMate(newPosition,opponent,castleDirection)){
+            dispatch(detectCheckmate(piece[0]))
+        }
+        const temp = appState.turn === "w" ? "b" : "w";
+        socket.emit("new-position", (newPosition, temp))
         }
         dispatch(clearCandidates())
     }
@@ -96,6 +108,18 @@ const Pieces = () => {
     }
     
     const onDragOver = e => {e.preventDefault()}
+
+    
+    useEffect( () => {
+        socket.on("get-new-position", (newPosition, temp) => {
+            console.log(newPosition)
+            console.log("new-position: ", temp)
+            dispatch(opponentMove(newPosition, temp));
+            // dispatch(makeNewMove(newState.position, newState.turn));
+        })
+        // appState.turn =  appState.turn === 'w' ? 'b' : 'w';
+        console.log(appState.turn)
+    }, [socket])
 
     return <div 
         className='pieces' 

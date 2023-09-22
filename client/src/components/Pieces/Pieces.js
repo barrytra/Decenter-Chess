@@ -1,7 +1,7 @@
 import './Pieces.css'
 import Piece from './Piece'
 import io from "socket.io-client"
-import { useEffect, useRef  } from 'react'
+import { useEffect, useRef, useState  } from 'react'
 import { useAppContext }from '../../contexts/Context'
 import { openPromotion } from '../../reducer/actions/popup'
 import { getCastlingDirections } from '../../arbiter/getMoves'
@@ -21,7 +21,7 @@ const Pieces = () => {
 
     const { appState , dispatch } = useAppContext();
     const currentPosition = appState.position[appState.position.length-1]
-
+    const [toggle, setToggle] = useState(false)
     const ref = useRef()
 
     const updateCastlingState = ({piece,file,rank}) => {
@@ -96,7 +96,8 @@ const Pieces = () => {
             dispatch(detectCheckmate(piece[0]))
         }
         const temp = appState.turn === "w" ? "b" : "w";
-        socket.emit("new-position", (newPosition, temp))
+        socket.emit("new-position", newPosition, temp, newMove)
+        setToggle(!toggle);
         }
         dispatch(clearCandidates())
     }
@@ -111,15 +112,16 @@ const Pieces = () => {
 
     
     useEffect( () => {
-        socket.on("get-new-position", (newPosition, temp) => {
+        socket.on("get-new-position", (newPosition, temp, moves) => {
             console.log(newPosition)
+            console.log(moves)
             console.log("new-position: ", temp)
-            dispatch(opponentMove(newPosition, temp));
+            dispatch(opponentMove(newPosition, temp, moves));
             // dispatch(makeNewMove(newState.position, newState.turn));
         })
         // appState.turn =  appState.turn === 'w' ? 'b' : 'w';
         console.log(appState.turn)
-    }, [socket])
+    },[])
 
     return <div 
         className='pieces' 

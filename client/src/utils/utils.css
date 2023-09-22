@@ -20,18 +20,20 @@
 
 .wallet {
     font-weight: bold;
+    position: relative;
         text-decoration-line: none;
         color: #11004d;
         font-family: "McLaren", cursive;
-        background-color: white;
-        padding: 10px 20px;
+        background-color: #d9eafd;
+        border-radius: 2px;
+        padding: 5px 20px;
         text-align: center;
         display: inline-block;
         font-size: 16px;
         cursor: pointer;
+        margin-right: 10px;
     
         :hover {
-            color: white;
-            background-color: #11004d;
+            color: rgb(52, 93, 204);
         }
 }

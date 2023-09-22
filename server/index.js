@@ -23,19 +23,22 @@ io.on("connection", socket => {
         socket.join(room_code);
     });
 
-    socket.on("new-position", (newPosition, temp)=> {
-        socket.broadcast.emit("get-new-position", (newPosition, temp))
+    socket.on("new-position", (newPosition, temp, moves)=> {
+        socket.broadcast.emit("get-new-position", newPosition, temp, moves)
         console.log("new-position: ", newPosition)
         console.log("turn: ", temp)
+        console.log("move: ", moves)
     });
 
-    socket.on("game_data", (createInputs,room_code) => {
-        socket.to(room_code).emit("recieve_game_data", createInputs)
+    socket.on("game_data", (createInputs, addr1) => {
+        socket.broadcast.emit("recieve_game_data", createInputs, addr1)
+        console.log("creator inputs: ", createInputs)
+        console.log("adddress: ", addr1)
     })
 
-    socket.on("join_room", (room_code) => {
-        socket.join(room_code);
-    });
+    socket.on("room_joined", (roomJoined, room_code) => {
+        socket.to(room_code).emit("room_joined", roomJoined)
+    })
 
 
 });

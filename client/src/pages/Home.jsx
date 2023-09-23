@@ -40,6 +40,9 @@ const Home = () => {
         const name = event.target.name;
         const value = event.target.value;
         setCreateInputs(values => ({ ...values, [name]: value }))
+        if(value === "unrated"){
+            setCreateInputs(values => ({ ...values, coins : 0 }))
+        }
     }
     const handleJoinChange = (event) => {
         const name = event.target.name;
@@ -49,17 +52,18 @@ const Home = () => {
 
     useEffect(() => {
         socket.on("recieve_game_data", (data, addr1) => {
-            setCreateInputs(data)
+            setCreateInputs({"roomCode": data.roomCode, "mode": data.mode, "coins": data.coins})
             setAddrCreator(addr1);
+            console.log("creator inputs: ", createInputs)
             console.log("creator's address: ", addr1);
         })
 
         socket.on("room_joined", (roomstatus) => {
-            setroomJoined(roomstatus);
+            setroomJoined(!roomstatus);
         })
     }, [socket])
 
-    const contractAddress = "0x037d942fC7074Fb3d46CDDCF13BA035d0246b7BD";
+    const contractAddress = "0xfD642C2303e47DBA4c31Ffcba7d821B6A177B880";
 
     const funcCreate = async (e) => {
         e.preventDefault()
@@ -83,22 +87,24 @@ const Home = () => {
         e.preventDefault()
         socket.emit("join_room", joinInputs.roomCode);
         console.log(joinInputs)
-        // setroomJoined(true);
+        setroomJoined(true);
 
-        if (createInputs.roomCode === joinInputs.roomCode) {
-            const { ethereum } = window;
-            if (ethereum) {
-                const provider = new ethers.providers.Web3Provider(ethereum);
-                const signer = provider.getSigner();
-                const contract = new ethers.Contract(contractAddress, ContractABI, signer);
+        // if (createInputs.roomCode === joinInputs.roomCode) {
+        //     const { ethereum } = window;
+        //     if (ethereum) {
+        //         const provider = new ethers.providers.Web3Provider(ethereum);
+        //         const signer = provider.getSigner();
+        //         const contract = new ethers.Contract(contractAddress, ContractABI, signer);
 
-                const stake = createInputs.mode === "unrated" ? 0 : createInputs.coins;
-                await contract.startGame(addrCreator, account, stake, gameCount);
-                setGameCount(gameCount + 1);
-                setroomJoined(true);
-                socket.emit("room_joined", roomJoined, joinInputs.roomCode);
-            }
-        }
+        //         await contract.startGame(addrCreator, account, createInputs.coins, gameCount);
+        //         setGameCount(gameCount + 1);
+        //         setroomJoined(true);
+        //         socket.emit("room_joined", roomJoined, joinInputs.roomCode);
+        //     }
+        // }
+        // else {
+        //     console.log("no room matches")
+        // }
     }
 
     if (!roomJoined && wait) {

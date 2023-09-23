@@ -38,6 +38,7 @@ io.on("connection", socket => {
 
     socket.on("room_joined", (roomJoined, room_code) => {
         socket.to(room_code).emit("room_joined", roomJoined)
+        console.log(roomJoined);
     })
 
 

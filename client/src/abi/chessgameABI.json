@@ -132,6 +132,11 @@
                 "internalType": "string[]",
                 "name": "_movesList",
                 "type": "string[]"
+            },
+            {
+                "internalType": "uint256",
+                "name": "gameCount",
+                "type": "uint256"
             }
         ],
         "name": "endGame",
@@ -384,25 +389,6 @@
                 "internalType": "uint8",
                 "name": "",
                 "type": "uint8"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_addr",
-                "type": "address"
-            }
-        ],
-        "name": "getBalance",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
             }
         ],
         "stateMutability": "view",

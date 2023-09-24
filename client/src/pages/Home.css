@@ -65,6 +65,19 @@ background-color: aliceblue;
         /* margin-top: 20rem; */
 }
 
+.tokenButton {
+    border: 2px solid;
+        margin: 0 20px;
+        align-items: center;
+        justify-content: center;
+        
+}
+
+.tokenForm {
+    background-color: #d9eafd;
+    border-radius: 3px;
+    padding: 5px 10px;
+}
 .contain {
     position: relative;
     margin: 3px;
@@ -98,4 +111,17 @@ background-color: aliceblue;
     width: 100%;
     padding: 12px;
         box-sizing: border-box;
+}
+
+.tokens {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.userTokens {
+    background-color: #d9eafd;
+    color: #000;
+    margin-right: 2rem;
+    padding: 5px 10px;
 }

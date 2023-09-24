@@ -23,6 +23,8 @@ const Pieces = () => {
     const currentPosition = appState.position[appState.position.length-1]
     const [toggle, setToggle] = useState(false)
     const ref = useRef()
+    let opponent2, castleDirection2, piece2;
+
 
     const updateCastlingState = ({piece,file,rank}) => {
         const direction = getCastlingDirections({
@@ -57,11 +59,12 @@ const Pieces = () => {
     const move = e => {
         const {x,y} = calculateCoords(e)
         const [piece,rank,file] = e.dataTransfer.getData("text").split(',')
-
+        piece2 = piece
         if(appState.candidateMoves.find(m => m[0] === x && m[1] === y)){
             const opponent = piece.startsWith('b') ? 'w' : 'b'
+            opponent2 = opponent
             const castleDirection = appState.castleDirection[`${piece.startsWith('b') ? 'white' : 'black'}`]
-
+             castleDirection2 = castleDirection
             if ((piece==='wp' && x === 7) || (piece==='bp' && x === 0)){
                 openPromotionBox({rank,file,x,y})
                 return
@@ -117,10 +120,9 @@ const Pieces = () => {
             console.log(moves)
             console.log("new-position: ", temp)
             dispatch(opponentMove(newPosition, temp, moves));
-            // dispatch(makeNewMove(newState.position, newState.turn));
-        })
-        // appState.turn =  appState.turn === 'w' ? 'b' : 'w';
-        console.log(appState.turn)
+            // appState.turn =  appState.turn === 'w' ? 'b' : 'w';
+            console.log(appState.turn)
+    })
     },[])
 
     return <div 

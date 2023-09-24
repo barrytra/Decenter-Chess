@@ -125,7 +125,7 @@
         "inputs": [
             {
                 "internalType": "address",
-                "name": "_winner",
+                "name": "creatorAddress",
                 "type": "address"
             },
             {
@@ -135,7 +135,7 @@
             },
             {
                 "internalType": "uint256",
-                "name": "gameCount",
+                "name": "winnerColor",
                 "type": "uint256"
             }
         ],
@@ -221,11 +221,6 @@
             {
                 "internalType": "uint256",
                 "name": "stake",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "gameCount",
                 "type": "uint256"
             }
         ],
@@ -389,6 +384,63 @@
                 "internalType": "uint8",
                 "name": "",
                 "type": "uint8"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_addr",
+                "type": "address"
+            }
+        ],
+        "name": "getBalance",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_addr",
+                "type": "address"
+            }
+        ],
+        "name": "getCurrentGameIdCreatorAddress",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_addr",
+                "type": "address"
+            }
+        ],
+        "name": "getUserGameIds",
+        "outputs": [
+            {
+                "internalType": "uint256[]",
+                "name": "",
+                "type": "uint256[]"
             }
         ],
         "stateMutability": "view",

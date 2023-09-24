@@ -35,7 +35,7 @@ const Home = () => {
     const [currentAccount, setCurrentAccount] = useState("");
 
 
-    const mintContract = "0x517D5e49172db976b0957b83Be9Cbc7Ade7443c2"
+    const mintContract = "0x1f23c60a823866444A5bdF556B5cD769F0a374D3"
 
     const updateUserCoins = async (e) => {
         // e.preventDefault()
@@ -84,7 +84,7 @@ const Home = () => {
                 let currentGameIdCreatorAddress = await contract.getCurrentGameIdCreatorAddress(currentAccount);
                 console.log(currentGameIdCreatorAddress);
                 // if(currentAccount === currentGameIdCreatorAddress){
-                        // await contract.endGame(addrCreator, movesList, winnerColor);
+                        await contract.endGame(addrCreator, movesList, winnerColor);
                 
             // }
                 
@@ -294,7 +294,7 @@ const Home = () => {
     return (
         <div>
             <nav className='nav'>
-                <div className='heading' to="/" > decenter Chess </div>
+                <div className='heading' to="/" > Decenter Chess </div>
                 {currentAccount !== "" ?
                     <div className='tokens'>
                         <div>
